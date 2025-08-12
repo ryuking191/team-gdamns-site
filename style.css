@@ -1,0 +1,172 @@
+:root {
+  --yellow: rgb(171,1,255); /* アクセントはパープル指定 */
+  --purple: rgb(171,1,255);
+  --orange: rgb(255,166,2);
+  --white: rgb(255,255,255);
+  --black: rgb(1,1,1);
+}
+
+*{ box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Noto Sans JP', system-ui, -apple-system, Segoe UI, Roboto, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif;
+  background-color: var(--black);
+  color: var(--white);
+}
+
+/* Header */
+.header {
+  background: var(--black);
+  color: var(--white);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px clamp(12px, 4vw, 30px);
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(4px);
+}
+.header .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: .5px; }
+.header .logo span { color: var(--yellow); }
+.header .nav{
+  display: flex; align-items:center; justify-content:flex-end;
+  gap: var(--nav-gap, 22px);
+  white-space: nowrap; overflow: hidden;
+}
+.header .nav a{ color: var(--white); text-decoration: none; font-weight: 600; font-size: var(--nav-font, 15px); }
+.header .nav a:hover{ color: var(--yellow); }
+
+/* Hero */
+.hero {
+  min-height: 76vh;
+  background: radial-gradient(60% 60% at 50% 35%, rgba(171,1,255,0.18), transparent 70%), #121212;
+  display: grid; place-items: center;
+  padding-top: clamp(72px, 12vh, 140px);
+  position: relative; overflow: hidden;
+}
+.hero .tagline { color: #eaeaea; font-size: 1.05rem; opacity: .9; text-align:center; margin-top: 12px; }
+.hero--logo .brand-logo{
+  width: clamp(260px, 45vw, 820px);
+  height: auto;
+  image-rendering: auto;
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,.55)) drop-shadow(0 0 16px rgba(171,1,255,.35));
+}
+.scroll-banner { position: absolute; bottom: 0; width: 100%; background: linear-gradient(90deg, rgba(171,1,255,.95), rgba(255,166,2,.95)); display: flex; overflow: hidden; }
+
+ 100%{transform:translateX(-100%)} }
+
+/* Sections */
+section { padding: 60px 20px; text-align: center; }
+h2 { font-size: clamp(28px, 4vw, 36px); margin-bottom: 28px; color: var(--yellow); letter-spacing: .6px; }
+#news > h2, #gd-cup > h2 { text-align: center !important; margin-left:auto; margin-right:auto; }
+
+/* General cards */
+.news-cards, .cup-cards, .store-cards { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+.card { background: #101010; border-radius: 12px; overflow: hidden; width: 280px; text-align: center; border: 1px solid rgba(255,255,255,.06); }
+.card h3 { margin: 10px 12px 6px; }
+.card p { margin: 0 12px 14px; color: #cfcfcf; font-size: 14px; }
+
+/* NEWS/CUP マーカーを完全無効化 */
+.news ul, .news ol, .news .plain-list, .crcup ul, .crcup ol, .crcup .plain-list{
+  list-style: none !important; padding-left: 0 !important; margin-left: 0 !important;
+}
+.news li, .crcup li{ padding-left: 0 !important; background: none !important; }
+.news .card, .crcup .card{ text-align: center; }
+.news-sub{ margin: 4px 0 8px; font-weight: 600; text-align: center; }
+
+/* ===== MEMBER (CR風カード) ===== */
+.cr-members { background: var(--black); }
+.cr-member-list{ display: grid; grid-template-columns: 1fr; gap: 18px; max-width: 1080px; margin: 0 auto; padding: 0 16px; list-style: none; }
+.cr-card{
+  position: relative; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center;
+  background: #0e0e0e; border-radius: 14px; overflow: hidden; min-height: 220px;
+  border: 2px solid rgba(255,255,255,0.06); isolation: isolate;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 8px, transparent 8px 16px);
+}
+.cr-card::before{ content:""; position:absolute; inset:0 0 0 auto; width:6px; z-index:1; }
+.cr-card[data-color="purple"]::before{ background: var(--purple); }
+.cr-card[data-color="yellow"]::before{ background: rgb(255,255,1); }
+.cr-card[data-color="orange"]::before{ background: var(--orange); }
+.cr-card__meta{ padding: 24px clamp(18px, 4vw, 36px); text-align: left; }
+.cr-name{ font-size: clamp(22px, 3.2vw, 30px); margin: 0 0 6px; letter-spacing: .5px; }
+.cr-role{ margin: 0 0 8px; color: #cfcfcf; font-size: 14px; }
+.cr-quote{ margin: 0; font-style: italic; color: #b8b8b8; opacity: .9; }
+.cr-card__art{ position: relative; display: grid; place-items: center; padding: 14px; }
+.cr-card__art img{ width: min(92%, 360px); height: auto; transform: translate3d(0,0,0); transition: transform .2s ease-out, filter .2s ease-out; will-change: transform; animation: floatY 4.5s ease-in-out infinite; filter: drop-shadow(0 8px 24px rgba(0,0,0,.45)); border-radius: 12px; }
+.cr-card:hover{ transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,.35); border-color: rgba(255,255,255,0.12); }
+.cr-card:hover .cr-card__art img{ transform: translate3d(0,-2px,0) scale(1.03); }
+@keyframes floatY{ 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-6px) } }
+
+/* Footer */
+footer { background: var(--black); text-align: center; padding: 28px 16px; color: var(--white); border-top: 1px solid rgba(255,255,255,.08); }
+
+/* ===== Neon ===== */
+:root{ --accent: rgb(171,1,255); --neon-shadow: 0 0 8px rgba(171,1,255,.65), 0 0 18px rgba(171,1,255,.45), 0 0 36px rgba(171,1,255,.28); }
+.neon-wrap{ position: relative; display: grid; place-items: center; width: 100%; }
+.neon-wrap::before{ content:""; position:absolute; inset: -8% -16% -12% -16%; background: radial-gradient(60% 55% at 50% 48%, rgba(171,1,255,.35), transparent 70%); filter: blur(28px); opacity: .9; z-index: 0; pointer-events: none; transition: opacity .3s ease; }
+.neon-wrap::after{ content:""; position:absolute; inset: -8% -16%; background: linear-gradient(75deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); mix-blend-mode: screen; transform: translateX(-120%); animation: neonSweep 6.5s cubic-bezier(.25,.1,.18,1) infinite; pointer-events: none; z-index: 2; }
+.hero--logo .brand-logo{ position: relative; z-index: 1; filter: drop-shadow(0 12px 28px rgba(0,0,0,.55)) drop-shadow(0 0 16px rgba(171,1,255,.35)); animation: neonPulse 5s ease-in-out infinite; transition: filter .2s ease, opacity .2s ease, transform .2s ease; }
+.hero--logo .brand-logo.is-bright{ filter: drop-shadow(0 12px 28px rgba(0,0,0,.55)) drop-shadow(0 0 28px rgba(171,1,255,.55)) drop-shadow(0 0 48px rgba(171,1,255,.35)); }
+.neon-flicker{ animation: neonBlink 12s linear infinite; }
+@keyframes neonPulse{ 0%,100%{ filter: drop-shadow(0 12px 28px rgba(0,0,0,.55)) drop-shadow(0 0 14px rgba(171,1,255,.28)); } 50%{ filter: drop-shadow(0 12px 28px rgba(0,0,0,.55)) drop-shadow(0 0 28px rgba(171,1,255,.55)); } }
+@keyframes neonBlink{ 0%,2%{ opacity:.96 } 2.5%{ opacity:.25 } 3%{ opacity:.92 } 3.4%{ opacity:.45 } 4%{ opacity:1 } 12%{ opacity:.98 } 12.5%{ opacity:.35 } 13%{ opacity:.96 } 20%{ opacity:.98 } 20.5%{ opacity:.3 } 21%{ opacity:.94 } 38%{ opacity:1 } 44%{ opacity:.9 } 44.4%{ opacity:.2 } 45%{ opacity:1 } 72%{ opacity:.98 } 73%{ opacity:.45 } 74%{ opacity:1 } 100%{ opacity: .98 } }
+@keyframes neonSweep{ 0%{ transform: translateX(-120%) } 55%{ transform: translateX(120%) } 100%{ transform: translateX(120%) } }
+@media (prefers-reduced-motion: reduce){ .neon-flicker, .hero--logo .brand-logo, .neon-wrap::after{ animation: none !important; } }
+
+
+/* ==== Edge-to-edge sponsor marquee ==== */
+.scroll-banner{
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(171,1,255,.95), rgba(255,166,2,.95));
+}
+.marquee{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 42px;
+}
+.marquee__track{
+  position: absolute;
+  top: 0; left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 50px;
+  padding: 10px 0;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 14s linear infinite;
+}
+.marquee__track.clone{
+  left: 100%;
+  animation: marquee 14s linear infinite;
+}
+.marquee__track .sponsor{
+  color: var(--black);
+  font-weight: 800;
+  letter-spacing: .4px;
+  padding: 0 20px;
+}
+@keyframes marquee{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+
+/* === Center section titles for MEMBER / STORE / ABOUT === */
+#member > h2, #store > h2, #about > h2{
+  display:block;
+  text-align: center !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* === ABOUT 本文を中央揃え === */
+#about{ text-align: center !important; }
+#about p{
+  text-align: center !important;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 900px;
+}
